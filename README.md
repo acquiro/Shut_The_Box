@@ -1,4 +1,4 @@
-# Shut_The_Boxe
+# Shut_The_Box
 Iron Scripter Challenge 05/26/2021
 https://ironscripter.us/lets-play-a-powershell-game/
 
