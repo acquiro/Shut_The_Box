@@ -1,4 +1,4 @@
-﻿#Reset the tiles
+#Reset the tiles
 function New_play_table {
     Param
     (
@@ -19,9 +19,14 @@ function Get-AsciiDice {
     (
         [parameter(Mandatory=$true,
         ParameterSetName="Random")]
-        [int]$Random
+        [int]$Random,
+
+        [parameter(Mandatory=$False)]
+        [ValidateSet("Black","DarkBlue","DarkGreen","DarkCyan","DarkRed","DarkMagenta","DarkYellow","Gray","DarkGray","Blue","Green","Cyan","Red","Magenta","Yellow","White")]
+        [String]$DieColor = "White"
+
     )
-    $result_throw = [pscustomobject]@{ Dice = "" ; Value = "" }
+    $result_throw = [pscustomobject]@{ Dice = "" ; Value = "" ; Color = $DieColor }
 
     $sum = 0 
     $NumberSet = (1..$random | foreach {Get-Random -Maximum 7 -Minimum 1 })
@@ -62,6 +67,7 @@ function Get-AsciiDice {
     else {
         $result_throw.Dice = $a,$b[0],$b[1],$b[2],$c
     }
+
 
     return $result_throw
 }
@@ -163,34 +169,37 @@ function Start-Play_Round{
 
     for ($i = 0 ; $i -lt ($global:scoreboard.count) ; $i++){
     
+        $dice_color = Read-Host "$($scoreboard[$i].Player) dice collors (Default white) Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, DarkYellow, Gray, DarkGray, Blue, Green, Cyan, Red, Magenta, Yellow, White"
+        clear
         new_play_table -board_size $table_size
         play_table
         while ((Get-Variable tile_*).count -gt 0){
         
+                $playground
+
                 if ((Get-Variable tile_*)  | Where-Object { ($_.Name -Match "[1][0-2]")}) { 
                     $number_of_dice = 0
                     while (($number_of_dice -ne 2) -and ($number_of_dice -ne 3)){ 
                         $number_of_dice = Read-Host "Tiles above 9 are left, roll [2] or [3] dices "
                     }
-                    $result_throw = Get-AsciiDice -random $number_of_dice
+                    $result_throw = Get-AsciiDice -random $number_of_dice -DieColor $dice_color
                 }
                 elseif  ((Get-Variable tile_*)  | Where-Object {($_.Name -Match "[6-9]")}) {
-                      $result_throw = Get-AsciiDice -Random 2                 
+                      $result_throw = Get-AsciiDice -Random 2 -DieColor $dice_color                
                 }
                 else {
                     $number_of_dice = 0
                     while (($number_of_dice -ne 1) -and ($number_of_dice -ne 2)){ 
                         $number_of_dice = Read-Host "Only tiles under 6 are left, roll [1] or [2] dices "
                     }
-                    $result_throw = Get-AsciiDice -random $number_of_dice
+                    $result_throw = Get-AsciiDice -random $number_of_dice -DieColor $dice_color -ErrorAction SilentlyContinue
                 }
 
                 [int[]]$available_tiles = (Get-Variable tile_* -ValueOnly | % { $_.split(" ") | select -index 1})
                 $possibilities = Get-Combinations -SumToReach $result_throw.Value -NumbersToUse $available_tiles
 
-                $playground
                 Write-Host ""
-                $result_throw.Dice
+                $result_throw.Dice | % {Write-Host $_ -ForegroundColor $($result_throw.Color)}
 
                 if ($possibilities -eq $null){
                     Write-Host "No possible combination left"
@@ -199,7 +208,7 @@ function Start-Play_Round{
                     $available_tiles | % { $player_score += $_}
                     $scoreboard[$i].Current_Score += $player_score
                     Get-Variable tile_* | Remove-Variable    
-                    Write-Host "$($Global:scoreboard[$i].Player) score = $($Global:scoreboard[$i].CurrentScore)"
+                    Write-Host "$($Global:scoreboard[$i].Player) score = $($Global:scoreboard[$i].Current_Score)"
                     Read-Host "Press any key to continue"
                 } 
                 else {
@@ -229,7 +238,6 @@ function Start-Play_Round{
                                 $player_selection = 0
                                 $selection_history = @()
                                 [System.Collections.ArrayList]$temp_tiles = $available_tiles
-                                clear
                             } 
                             else {
                                 $player_selection = $result_throw.Value
@@ -244,9 +252,9 @@ function Start-Play_Round{
                     }
                     $selection_history | % {
                     [string]$to_remove = "tile_$_"
-                    Remove-Variable $to_remove
+                    Remove-Variable -scope Global $to_remove
                     Play_table
-                    clear
+                    #clear
                     if ((Get-Variable tile_*).count -eq 0){
                         Write-Host "Shut the boxe !!! You win this round!"
                         $global:scoreboard[$i].Round_Won += 1
