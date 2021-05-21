@@ -16,6 +16,7 @@ Start-Shut_The_Boxe requires two arguments :
 
 
 The ASCII dice generator is a tweak to another Redditor I can't find the name back. 
+
 I ended up using this method as his ASCII was far better than mine and allows to print all of the dice on the "same line". 
 
 Thanks to PeterJoAl from Reddit for his help to come accross a clean way to get all of the possible combinations. My first attempt was quite a mess.
