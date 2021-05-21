@@ -137,9 +137,9 @@ function Start-Shut_The_Boxe {
         [ValidateSet(2,3,4,5,6)]
         [int]$number_of_players,
 
-    [Parameter(Mandatory)]
+    [Parameter()]
         [ValidateSet(9,10,11,12)]
-        [int]$table_size
+        [int]$table_size = 9
     )
 
     scoreboard($number_of_players)
