@@ -254,7 +254,7 @@ function Start-Play_Round{
                     [string]$to_remove = "tile_$_"
                     Remove-Variable -scope Global $to_remove
                     Play_table
-                    #clear
+                    clear
                     if ((Get-Variable tile_*).count -eq 0){
                         Write-Host "Shut the boxe !!! You win this round!"
                         $global:scoreboard[$i].Round_Won += 1
