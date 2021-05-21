@@ -26,12 +26,12 @@ After throwing, the player adds up the dot) on the dice and then "shuts" one of 
 
 For example, if the total number of dots is 8, the player may choose any of the following sets of numbers as long as all of the numbers in the set are available to be covered:
 
-  8
-  7, 1
-  6, 2
-  5, 3
-  5, 2, 1
-  4, 3, 1
+    8
+    7, 1
+    6, 2
+    5, 3
+    5, 2, 1
+    4, 3, 1
 
 The player then rolls the dice again, aiming to shut more numbers. The player continues throwing the dice and shutting numbers until reaching a point at which, given the results produced by the dice, the player cannot shut any more numbers.
 
