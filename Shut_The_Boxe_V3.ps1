@@ -160,11 +160,6 @@ function Scoreboard ($number_of_players){
 
 }
 
-$throw_logs = @() 
-$throw_log = [pscustomobject]@{Throw = "" ; Selection = @() ; Player = ""} 
-$round_logs = [pscustomobject]@{ Round = "" ;  Logs = $throw_logs }
-
-$throw_logs
 
 function Start-Play_Round{
     Param
@@ -293,3 +288,12 @@ function Start-Play_Round{
         Start-Play_Round -table_size $table_size
     }
 }
+
+#Main ?
+
+Write-Host "MY POCKET SHUT THE BOXE" 
+Write-Host "Starting New Game"
+$multiplayers = Read-Host "Number of players (default 2) : 2-6"
+$tablesize = Read-Host "Table size (default 9) : 9-14"
+clear
+Start-Shut_The_Boxe -number_of_players $multiplayers -table_size $tablesize
