@@ -207,7 +207,7 @@ function Start-Play_Round{
                     $player_score = 0
                     $available_tiles | % { $player_score += $_}
                     $scoreboard[$i].Current_Score += $player_score
-                    Get-Variable tile_* | Remove-Variable    
+                    Get-Variable -scope Global "tile_*" | Remove-Variable    
                     Write-Host "$($Global:scoreboard[$i].Player) score = $($Global:scoreboard[$i].Current_Score)"
                     Read-Host "Press any key to continue"
                 } 
@@ -244,7 +244,7 @@ function Start-Play_Round{
                                 $player_score = 0
                                 $temp_tiles | % { $player_score += $_}
                                 $scoreboard[$i].Current_Score += $player_score
-                                Get-Variable tile_* | Remove-Variable
+                                Get-Variable -Scope Global "tile_*" | Remove-Variable
                             }
                         
                         }
@@ -255,7 +255,7 @@ function Start-Play_Round{
                     Remove-Variable -scope Global $to_remove
                     Play_table
                     clear
-                    if ((Get-Variable tile_*).count -eq 0){
+                    if ((Get-Variable  tile_*).count -eq 0){
                         Write-Host "Shut the boxe !!! You win this round!"
                         $global:scoreboard[$i].Round_Won += 1
                         $global:scoreboard[0..($global:scoreboard.count)] | % {$_.Score = 0 }
@@ -275,4 +275,3 @@ function Start-Play_Round{
         Start-Play_Round -table_size $table_size
     }
 }
-                
