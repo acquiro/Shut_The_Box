@@ -272,6 +272,7 @@ function Start-Play_Round{
     $scoreboard | % {$_.Current_Score = 0}   
     $new_round = Read-Host "Another round ?  [Y]es / [N]o"
     if (($new_round -eq 'Y') -or ($new_round -eq 'yes')){ 
+        clear
         Start-Play_Round -table_size $table_size
     }
 }
