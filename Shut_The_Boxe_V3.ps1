@@ -207,7 +207,7 @@ function Start-Play_Round{
                     $player_score = 0
                     $available_tiles | % { $player_score += $_}
                     $scoreboard[$i].Current_Score += $player_score
-                    Get-Variable -scope Global "tile_*" | Remove-Variable    
+                    Remove-Variable -Scope Global "tile_*"   
                     Write-Host "$($Global:scoreboard[$i].Player) score = $($Global:scoreboard[$i].Current_Score)"
                     Read-Host "Press any key to continue"
                 } 
@@ -244,7 +244,7 @@ function Start-Play_Round{
                                 $player_score = 0
                                 $temp_tiles | % { $player_score += $_}
                                 $scoreboard[$i].Current_Score += $player_score
-                                Get-Variable -Scope Global "tile_*" | Remove-Variable
+                                Remove-Variable -Scope Global "tile_*" 
                             }
                         
                         }
