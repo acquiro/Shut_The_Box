@@ -295,5 +295,11 @@ Write-Host "MY POCKET SHUT THE BOXE"
 Write-Host "Starting New Game"
 $multiplayers = Read-Host "Number of players (default 2) : 2-6"
 $tablesize = Read-Host "Table size (default 9) : 9-14"
+if ($multiplayers -eq ""){
+    $multiplayers = 2
+}
+if ($tablesize -eq ""){
+    $tablesize = 9
+}
 clear
 Start-Shut_The_Boxe -number_of_players $multiplayers -table_size $tablesize
