@@ -295,10 +295,10 @@ Write-Host "MY POCKET SHUT THE BOXE"
 Write-Host "Starting New Game"
 $multiplayers = Read-Host "Number of players (default 2) : 2-6"
 $tablesize = Read-Host "Table size (default 9) : 9-14"
-if ($multiplayers -eq ""){
+if ($multiplayer -notlike "[2-6]"){
     $multiplayers = 2
 }
-if ($tablesize -eq ""){
+if ($tablesize -notmatch '9|1[0-4]'){
     $tablesize = 9
 }
 clear
