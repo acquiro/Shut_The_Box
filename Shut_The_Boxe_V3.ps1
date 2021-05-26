@@ -298,7 +298,7 @@ $tablesize = Read-Host "Table size (default 9) : 9-14"
 if ($multiplayer -notlike "[2-6]"){
     $multiplayers = 2
 }
-if ($tablesize -notmatch '9|1[0-4]'){
+if ($tablesize -notlike '9|1[0-4]'){
     $tablesize = 9
 }
 clear
